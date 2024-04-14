@@ -5,7 +5,7 @@ export const usersRoutes = Router()
 
 usersRoutes
   .get('/', UserController.getUsers)
-  .post('/')
+  .post('/', UserController.createUser)
   .put('/:id')
   .delete('/:id')
   .get('/:id')
