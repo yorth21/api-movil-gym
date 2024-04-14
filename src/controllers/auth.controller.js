@@ -8,7 +8,7 @@ export class AuthController {
   static async login (req, res) {
     const body = validateLogin(req.body)
     if (!body.success) {
-      return res.status(400).json({ message: body.message })
+      return sendError(res, 400, body.message)
     }
 
     try {
@@ -26,7 +26,6 @@ export class AuthController {
 
       const token = generateToken({
         payload: { id: user.id, username: user.username },
-        expiresIn: '1h',
         jwtSecret: process.env.JWT_SECRET
       })
 
