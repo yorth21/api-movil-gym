@@ -38,7 +38,8 @@ export class UserRepository {
       if (!userToDelete) {
         return null
       }
-      await userToDelete.destroy()
+      userToDelete.isActive = false
+      await userToDelete.save()
       return userToDelete
     } catch (error) {
       throw new Error(error)
