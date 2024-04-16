@@ -22,10 +22,11 @@ export class AuthController {
         return sendError(res, 401, 'Invalid credentials')
       }
 
-      delete user.password
+      user.password = undefined
 
       const token = generateToken({
         payload: { id: user.id, username: user.username },
+        expiresIn: '1h',
         jwtSecret: process.env.JWT_SECRET
       })
 
