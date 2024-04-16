@@ -8,7 +8,7 @@ export const PhysicalInfoModel = sequelize.define('physical_info', {
     autoIncrement: true
   },
   height: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   weight: {
