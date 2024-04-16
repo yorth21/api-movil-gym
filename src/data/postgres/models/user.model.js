@@ -53,13 +53,13 @@ export const UserModel = sequelize.define('users', {
   }
 })
 
-PhysicalInfoModel.hasOne(UserModel, {
-  foreignKey: 'idphysicalinfo',
+UserModel.hasOne(PhysicalInfoModel, {
+  foreignKey: 'iduser',
   sourceKey: 'id'
 })
 
-UserModel.belongsTo(PhysicalInfoModel, {
-  foreignKey: 'idphysicalinfo',
+PhysicalInfoModel.belongsTo(UserModel, {
+  foreignKey: 'iduser',
   targetKey: 'id'
 })
 
