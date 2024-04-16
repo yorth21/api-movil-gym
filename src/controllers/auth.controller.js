@@ -6,18 +6,18 @@ import { validateLogin } from '../schemas/login.schema.js'
 
 export class AuthController {
   static async login (req, res) {
-    const body = validateLogin(req.body)
-    if (!body.success) {
-      return sendError(res, 400, body.message)
+    const dataLogin = validateLogin(req.body)
+    if (!dataLogin.success) {
+      return sendError(res, 400, dataLogin.message)
     }
 
     try {
-      const user = await UserRepository.getUserByUsername(body.username)
+      const user = await UserRepository.getUserByUsername(dataLogin.data.username)
       if (!user) {
         return sendError(res, 401, 'Invalid credentials')
       }
 
-      const match = await bcrypt.compare(body.password, user.password)
+      const match = await bcrypt.compare(dataLogin.data.password, user.password)
       if (!match) {
         return sendError(res, 401, 'Invalid credentials')
       }
