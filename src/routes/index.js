@@ -9,5 +9,5 @@ export const Routes = Router()
 Routes
   .use('/auth', authRoutes)
   .use('/users', usersRoutes)
-  .use('/catExcercise', catExcerciseRoutes)
-  .use('/excercise', excerciseRoutes)
+  .use('/catExcercises', catExcerciseRoutes)
+  .use('/excercises', excerciseRoutes)
