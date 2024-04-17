@@ -7,6 +7,7 @@ import './data/postgres/models/user.model.js'
 import './data/postgres/models/physicalInfo.model.js'
 import './data/postgres/models/regDiary.model.js'
 import './data/postgres/models/catExcercise.model.js'
+import './data/postgres/models/excercise.model.js'
 
 const PORT = process.env.PORT || 3000
 
