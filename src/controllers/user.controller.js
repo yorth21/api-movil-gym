@@ -47,4 +47,38 @@ export class UserController {
       sendError(res, 500, error.message)
     }
   }
+
+  static async getUserByUsername (req, res) {
+    try {
+      const user = await UserRepository.getUserByUsername(req.params.username)
+      if (!user) {
+        return sendError(res, 404, 'User not found')
+      }
+
+      user.password = undefined
+      sendSuccess(res, user)
+    } catch (error) {
+      sendError(res, 500, error.message)
+    }
+  }
+
+  static async updateUser (req, res) {
+    const data = validateUser(req.body)
+    if (!data.success) {
+      return sendError(res, 400, 'Validation error')
+    }
+
+    try {
+      const user = await UserRepository.getUserByUsername(req.params.username)
+      if (!user) {
+        return sendError(res, 404, 'User not found')
+      }
+
+      const result = await UserRepository.updateUser(user.id, data.data)
+      result.password = undefined
+      sendSuccess(res, result)
+    } catch (error) {
+      sendError(res, 500, error.message)
+    }
+  }
 }
