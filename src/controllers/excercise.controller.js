@@ -12,9 +12,9 @@ export class ExcerciseController {
   }
 
   static async getByIdcat (req, res) {
-    const { id } = req.params
+    const { idcat } = req.params
     try {
-      const excercises = await ExcerciseRepository.getByIdcat(id)
+      const excercises = await ExcerciseRepository.getByIdcat(idcat)
       sendSuccess(res, excercises)
     } catch (error) {
       sendError(res, 500, error.message)
