@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../connection.js'
+import { PhysicalInfoModel } from './physicalInfo.model.js'
+import { RegDiaryModel } from './regDiary.model.js'
 
 export const UserModel = sequelize.define('users', {
   id: {
@@ -19,19 +21,6 @@ export const UserModel = sequelize.define('users', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  weight: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  height: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  goalWeight: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-    field: 'goal_weight'
-  },
   username: {
     type: DataTypes.STRING(50),
     allowNull: false,
@@ -46,6 +35,12 @@ export const UserModel = sequelize.define('users', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+    field: 'is_active'
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -55,11 +50,25 @@ export const UserModel = sequelize.define('users', {
     type: DataTypes.DATE,
     allowNull: false,
     field: 'updated_at'
-  },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: true,
-    field: 'is_active'
   }
+})
+
+UserModel.hasOne(PhysicalInfoModel, {
+  foreignKey: 'iduser',
+  sourceKey: 'id'
+})
+
+PhysicalInfoModel.belongsTo(UserModel, {
+  foreignKey: 'iduser',
+  targetKey: 'id'
+})
+
+UserModel.hasMany(RegDiaryModel, {
+  foreignKey: 'iduser',
+  sourceKey: 'id'
+})
+
+RegDiaryModel.belongsTo(UserModel, {
+  foreignKey: 'iduser',
+  targetKey: 'id'
 })
