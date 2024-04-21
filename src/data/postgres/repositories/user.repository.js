@@ -23,7 +23,7 @@ export class UserRepository {
     try {
       const userToUpdate = await UserModel.findByPk(id)
       if (!userToUpdate) {
-        return null
+        throw new Error('User not found')
       }
       await userToUpdate.update(user)
       return userToUpdate
@@ -50,6 +50,29 @@ export class UserRepository {
     try {
       const user = await UserModel.findOne({ where: { username } })
       return user
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  static async getUserByEmail (email) {
+    try {
+      const user = await UserModel.findOne({ where: { email } })
+      return user
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  static async updatePassword (id, password) {
+    try {
+      const userToUpdate = await UserModel.findByPk(id)
+      if (!userToUpdate) {
+        throw new Error('User not found')
+      }
+      userToUpdate.password = password
+      await userToUpdate.save()
+      return userToUpdate
     } catch (error) {
       throw new Error(error)
     }

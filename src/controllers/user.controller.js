@@ -63,8 +63,8 @@ export class UserController {
   }
 
   static async updateUser (req, res) {
-    const data = validateUser(req.body)
-    if (!data.success) {
+    const dataUser = validateUser(req.body)
+    if (!dataUser.success) {
       return sendError(res, 400, 'Validation error')
     }
 
@@ -74,7 +74,7 @@ export class UserController {
         return sendError(res, 404, 'User not found')
       }
 
-      const result = await UserRepository.updateUser(user.id, data.data)
+      const result = await UserRepository.updateUser(user.id, dataUser.data)
       result.password = undefined
       sendSuccess(res, result)
     } catch (error) {
