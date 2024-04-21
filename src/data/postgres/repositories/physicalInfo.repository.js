@@ -46,9 +46,9 @@ export class PhysicalInfoRepository {
     }
   }
 
-  static async getPhysicalInfoByUserId (userId) {
+  static async getPhysicalInfoByIduser (iduser) {
     try {
-      const physicalInfo = await PhysicalInfoModel.findOne({ where: { userId } })
+      const physicalInfo = await PhysicalInfoModel.findOne({ where: { iduser } })
       return physicalInfo
     } catch (error) {
       throw new Error(error)
