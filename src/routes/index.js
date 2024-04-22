@@ -6,6 +6,7 @@ import { excerciseRoutes } from './excercise.routes.js'
 import { regDiaryRoutes } from './regDiary.routes.js'
 import { physicalInfoRoutes } from './physicalInfo.routes.js'
 import { emailRoutes } from './email.routes.js'
+import { foodRoutes } from './food.routes.js'
 
 export const Routes = Router()
 
@@ -17,3 +18,4 @@ Routes
   .use('/excercises', excerciseRoutes)
   .use('/physicalinfo', physicalInfoRoutes)
   .use('/regdiaries', regDiaryRoutes)
+  .use('/foods', foodRoutes)
