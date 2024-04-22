@@ -11,6 +11,7 @@ import './data/postgres/models/excercise.model.js'
 import './data/postgres/models/catFood.model.js'
 import './data/postgres/models/food.model.js'
 import './data/postgres/models/foodDiary.model.js'
+import './data/postgres/models/ingredient.model.js'
 
 const PORT = process.env.PORT || 3000
 
