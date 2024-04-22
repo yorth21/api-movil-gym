@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize'
 import { sequelize } from '../connection.js'
 import { PhysicalInfoModel } from './physicalInfo.model.js'
 import { RegDiaryModel } from './regDiary.model.js'
+import { FoodDiaryModel } from './foodDiary.model.js'
 
 export const UserModel = sequelize.define('users', {
   id: {
@@ -69,6 +70,16 @@ UserModel.hasMany(RegDiaryModel, {
 })
 
 RegDiaryModel.belongsTo(UserModel, {
+  foreignKey: 'iduser',
+  targetKey: 'id'
+})
+
+UserModel.hasMany(FoodDiaryModel, {
+  foreignKey: 'iduser',
+  sourceKey: 'id'
+})
+
+FoodDiaryModel.belongsTo(UserModel, {
   foreignKey: 'iduser',
   targetKey: 'id'
 })
