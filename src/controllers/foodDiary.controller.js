@@ -16,7 +16,7 @@ export class FoodDiaryController {
   static async getFoodDiariesByIduserAndDate (req, res) {
     try {
       const iduser = req.params.iduser
-      const date = req.params.date
+      const date = Date.now()
       const foodDiaries = await FoodDiaryRepository.getFoodDiariesByIduserAndDate(iduser, date)
       sendSuccess(res, foodDiaries)
     } catch (error) {
@@ -31,6 +31,9 @@ export class FoodDiaryController {
     }
 
     try {
+      const date = Date.now()
+      dataFoodDiary.data.date = date
+
       const newFoodDiary = await FoodDiaryRepository.createFoodDiary(dataFoodDiary.data)
       sendSuccess(res, newFoodDiary, 201)
     } catch (error) {
