@@ -1,3 +1,4 @@
+import { PhysicalInfoModel } from '../models/physicalInfo.model.js'
 import { UserModel } from '../models/user.model.js'
 
 export class UserRepository {
@@ -48,8 +49,16 @@ export class UserRepository {
 
   static async getUserByUsername (username) {
     try {
-      const user = await UserModel.findOne({ where: { username } })
-      return user
+      const user = await UserModel.findOne({
+        where: { username },
+        attributes: { exclude: ['createdAt', 'updatedAt'] }
+      })
+      const physicalInfo = await PhysicalInfoModel.findOne({
+        where: { iduser: user.id },
+        attributes: { exclude: ['iduser', 'id', 'createdAt', 'updatedAt'] }
+      })
+
+      return { ...user.dataValues, ...physicalInfo.dataValues }
     } catch (error) {
       throw new Error(error)
     }
