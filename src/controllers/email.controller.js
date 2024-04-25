@@ -1,9 +1,7 @@
-import { Resend } from 'resend'
 import { sendError, sendSuccess } from '../utils/response.util.js'
 import { UserRepository } from '../data/postgres/repositories/user.repository.js'
 import bcrypt from 'bcrypt'
-
-const resend = new Resend(process.env.APIKEY_RESEND)
+import { transporter } from '../data/emails/sendEmail.js'
 
 export class EmailController {
   static async sendEmail (req, res) {
@@ -22,18 +20,23 @@ export class EmailController {
 
       await UserRepository.updatePassword(dataUser.id, hashedPassword)
 
-      const { data, error } = await resend.emails.send({
-        from: 'Acme <onboarding@resend.dev>',
-        to: ['02cuentasecundaria@gmail.com'],
-        subject: 'Forgot Password',
-        html: `<strong>Tu contraseña es: ${randomPassword}</strong>`
-      })
-
-      if (error) {
-        sendError(res, 400, error)
+      const propsEmail = {
+        from: '',
+        to: email,
+        subject: 'Password reset',
+        text: `Your new password is: ${randomPassword}`,
+        html: `<p>Your new password is: ${randomPassword}</p>`
       }
 
-      sendSuccess(res, data, 201)
+      transporter.sendMail(propsEmail, (error, info) => {
+        if (error) {
+          console.log(error)
+          throw new Error(error)
+        }
+        console.log('Email sent')
+      })
+
+      sendSuccess(res, 'Email sent', 201)
     } catch (error) {
       sendError(res, 500, error.message)
     }
