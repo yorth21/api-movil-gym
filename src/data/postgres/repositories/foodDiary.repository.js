@@ -1,9 +1,16 @@
+import { FoodModel } from '../models/food.model.js'
 import { FoodDiaryModel } from '../models/foodDiary.model.js'
 
 export class FoodDiaryRepository {
   static async getFoodDiariesByIduser (iduser) {
     try {
-      const foodDiaries = await FoodDiaryModel.findAll({ where: { iduser } })
+      const foodDiaries = await FoodDiaryModel.findAll({
+        where: { iduser },
+        include: {
+          model: FoodModel,
+          attributes: ['idcatfood']
+        }
+      })
       return foodDiaries
     } catch (error) {
       throw new Error(error)
@@ -12,7 +19,13 @@ export class FoodDiaryRepository {
 
   static async getFoodDiariesByIduserAndDate (iduser, date) {
     try {
-      const foodDiaries = await FoodDiaryModel.findAll({ where: { iduser, date } })
+      const foodDiaries = await FoodDiaryModel.findAll({
+        where: { iduser, date },
+        include: {
+          model: FoodModel,
+          attributes: { exclude: ['createdAt', 'updatedAt'] }
+        }
+      })
       return foodDiaries
     } catch (error) {
       throw new Error(error)

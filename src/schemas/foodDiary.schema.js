@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 const foodDiarySchema = z.object({
-  iduser: z.string().min(3).max(255),
-  idfood: z.string().min(3).max(255)
+  iduser: z.number().int().min(1),
+  idfood: z.number().int().min(1)
 })
 
 export function validateFoodDiary (data) {
