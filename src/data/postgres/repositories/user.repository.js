@@ -53,6 +53,11 @@ export class UserRepository {
         where: { username },
         attributes: { exclude: ['createdAt', 'updatedAt'] }
       })
+
+      if (!user) {
+        return null
+      }
+
       const physicalInfo = await PhysicalInfoModel.findOne({
         where: { iduser: user.id },
         attributes: { exclude: ['iduser', 'id', 'createdAt', 'updatedAt'] }
